@@ -45,7 +45,18 @@ There is a CLI generator syntax `mix phx.gen.live ...` but we want to know what 
     * --> see basic version with only render and mount
     * `@time` is a socket assign and needs to be defined by the mount()
 
+* for some structure, move the template content to `game_live.html.heex` next to `game_live.ex` and remove the `render/1` function 
 
+## Display stuff dynamically
+> From Commit: 747d93b
+
+* new assigns
+* template like that to interpolate content and style dynamically
+```
+<div class="word-display" style={"color: #{@color};"}>
+    <%= @word %>
+</div>
+```
 
 ## Simple Clock
 
@@ -58,8 +69,14 @@ There is a CLI generator syntax `mix phx.gen.live ...` but we want to know what 
 
 
 ## General stuff
+Language
 * :atoms
-* last line is return value
 * _unused convention is a rule
+* function/1 notation -> i.e. like Python, Elixir is dynamically but strongly typed (no automatic type coercion, but a variable doesn't have an innate type)
+* last line is return value
+* destructuring / everything is pattern-matching rather than assignment
+
+Infra / Workflow
 * no "npm install", rather "mix hex.info <package_name>" -> add manually -> "mix deps.get"
 * Live Reloading on by default, but might look into configuration in case of wonders
+* mix format

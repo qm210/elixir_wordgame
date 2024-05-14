@@ -1,3 +1,12 @@
-<div>
-    <h1>Current Time: <%= @time %></h1>
+<style>
+.word-display {
+    margin: 5rem;
+    font-size: 6rem;
+    font-weight: bold;
+    text-align: center;
+}
+</style>
+
+<div class="word-display" style={"color: #{@color};"}>
+    <%= @word %>
 </div>
