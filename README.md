@@ -58,8 +58,39 @@ There is a CLI generator syntax `mix phx.gen.live ...` but we want to know what 
 </div>
 ```
 
-## Simple Clock
+## Random words from list
+```
+word1 = Enum.random(words)
+word2 = draw_different_word(word1, words)
 
+defp draw_different_word(first_word, words) do
+    result = Enum.random(words)
+    if result != first_word, do: result, else: draw_different_word(first_word, words)
+  end
+
+```
+
+## Centralize state -> GenServer
+* for now, these LiveViews are different for each socket.
+* GenServer for centralized state: `Game`
+  * move application logic there and define init/1 and handle_call/3
+  * see game.ex in commit 
+* don't forget to put in the application.ex start children list!
+* access from the liveview via
+
+```
+  def mount(_params, _session, socket) do
+    state = GenServer.call(ElixirWordgame.Game, :get)
+    IO.inspect state, label: "Mounting Initial State"
+    {:ok, socket
+          |> assign(word: state[:word])
+          |> assign(color: state[:color])
+    }
+  end
+```
+
+## Simple Clock
+> From commit 49a8347
 
 
 
@@ -73,8 +104,11 @@ Language
 * :atoms
 * _unused convention is a rule
 * function/1 notation -> i.e. like Python, Elixir is dynamically but strongly typed (no automatic type coercion, but a variable doesn't have an innate type)
+  * "def" (public) and "defp" (private); but no nested functions
 * last line is return value
 * destructuring / everything is pattern-matching rather than assignment
+  * focus on Immutability
+  * i.e. there are no while-loops
 
 Infra / Workflow
 * no "npm install", rather "mix hex.info <package_name>" -> add manually -> "mix deps.get"

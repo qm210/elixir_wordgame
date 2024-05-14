@@ -17,7 +17,9 @@ defmodule ElixirWordgame.Application do
       # Start a worker by calling: ElixirWordgame.Worker.start_link(arg)
       # {ElixirWordgame.Worker, arg},
       # Start to serve requests, typically the last entry
-      ElixirWordgameWeb.Endpoint
+      ElixirWordgameWeb.Endpoint,
+
+      ElixirWordgame.Game
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

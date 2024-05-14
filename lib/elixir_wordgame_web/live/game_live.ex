@@ -2,12 +2,11 @@ defmodule ElixirWordgameWeb.GameLive do
   use Phoenix.LiveView
 
   def mount(_params, _session, socket) do
-    word = "blue"
-    color = "green"
+    state = GenServer.call(ElixirWordgame.Game, :get)
+    IO.inspect state, label: "Mounting Initial State"
     {:ok, socket
-          |> assign(time: 0)
-          |> assign(word: word)
-          |> assign(color: color)
+          |> assign(word: state[:word])
+          |> assign(color: state[:color])
     }
   end
 
