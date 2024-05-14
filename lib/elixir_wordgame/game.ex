@@ -6,12 +6,13 @@ defmodule ElixirWordgame.Game do
   end
 
   def init(_state) do
-    initial_state = %{word: "none", color: "silver"}
+    # called on application startup
+    # value = GenServer.call(self(), :draw_random)
+    initial_state = draw_random()
     {:ok, initial_state}
   end
 
-  def handle_call(:get, from, state) do
-    IO.inspect from, label: "Get - from"
+  def handle_call(:get, _from, state) do
     IO.inspect state, label: "Get - state"
     {:reply, state, state}
   end

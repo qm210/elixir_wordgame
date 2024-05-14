@@ -73,11 +73,12 @@ defp draw_different_word(first_word, words) do
 ## Centralize state -> GenServer
 * for now, these LiveViews are different for each socket.
 * GenServer for centralized state: `Game`
-  * move application logic there and define init/1 and handle_call/3
+  * define init/1 and handle_call/3 and start_link/1
+  * move application logic there
   * see game.ex in commit 
+  * > 89759aa
 * don't forget to put in the application.ex start children list!
 * access from the liveview via
-
 ```
   def mount(_params, _session, socket) do
     state = GenServer.call(ElixirWordgame.Game, :get)
@@ -88,6 +89,7 @@ defp draw_different_word(first_word, words) do
     }
   end
 ```
+* init/1 is called once per app startup only. can't GenServer.call(self(), ... ) due to recursive calls! 
 
 ## Simple Clock
 > From commit 49a8347
