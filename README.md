@@ -31,6 +31,23 @@ Comments:
 * history overview over Phoenix LiveView?
 * see `elixir_wordgame` and `elixir_wordgame_web` directories
   * directory names are important
+  * a lot of things are defined by convention
+
+## Simple Live View
+> Starting Commit: 062f84c
+
+There is a CLI generator syntax `mix phx.gen.live ...` but we want to know what we're doing, so
+
+* entry in router.ex
+`live "/game", GameLive`
+* -> requires the ElixirWordgameWeb.GameLive component
+  * define `lib/elixir_wordgame_web/live/game_live.ex`
+    * --> see basic version with only render and mount
+    * `@time` is a socket assign and needs to be defined by the mount()
+
+## Simple Clock
+
+
 
 
 
@@ -39,6 +56,8 @@ Comments:
 
 
 ## General stuff
+* :atoms
 * last line is return value
 * _unused convention is a rule
 * no "npm install", rather "mix hex.info <package_name>" -> add manually -> "mix deps.get"
+* Live Reloading on by default, but might look into configuration in case of wonders
