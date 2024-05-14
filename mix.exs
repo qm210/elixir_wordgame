@@ -35,6 +35,7 @@ defmodule ElixirWordgame.MixProject do
       {:phoenix, "~> 1.7.12"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
+      {:ecto_sqlite3, "~> 0.15.1"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},

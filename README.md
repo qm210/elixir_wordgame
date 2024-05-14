@@ -14,7 +14,10 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ### Steps:
 (prerequisites: current Erlang/OTP, Elixir, Mix, Phoenix 1.7.12 installed).
 ```
-mix phx.new elixir_wordgame --live
+mix phx.new elixir_wordgame --live --database sqlite3
+
+# can start already, start by the following, then check localhost:4000
+mix phx.server
 ```
 
 Comments:
@@ -25,10 +28,17 @@ Comments:
 ```
   {:phoenix_live_view, "~> 0.20.2"}
 ```
-
-
+* history overview over Phoenix LiveView?
+* see `elixir_wordgame` and `elixir_wordgame_web` directories
+  * directory names are important
 
 
 
 ### Postponed
-* Ecto Integration (Database and Schemas)
+* Ecto Integration (Database and Schemas) 
+
+
+## General stuff
+* last line is return value
+* _unused convention is a rule
+* no "npm install", rather "mix hex.info <package_name>" -> add manually -> "mix deps.get"

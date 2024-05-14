@@ -2,11 +2,11 @@ import Config
 
 # Configure your database
 config :elixir_wordgame, ElixirWordgame.Repo,
-  username: "postgres",
-  password: "postgres",
+  adapter: Ecto.Adapters.SQLite3,
+  username: "root",
+  password: "",
+  database: "elixir_wordgame_dev.sqlite3",
   hostname: "localhost",
-  database: "elixir_wordgame_dev",
-  stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

@@ -14,13 +14,17 @@
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/bandit" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/castore" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cc_precompiler" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/db_connection" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/decimal" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/dns_cluster" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ecto" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ecto_sql" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ecto_sqlite3" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/elixir_make" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/esbuild" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/expo" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/exqlite" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/file_system" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/finch" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gettext" />
@@ -139,5 +143,12 @@
     <orderEntry type="library" name="mix_test_watch" level="project" />
     <orderEntry type="library" name="mox" level="project" />
     <orderEntry type="library" name="hpack" level="project" />
+    <orderEntry type="library" name="exqlite" level="project" />
+    <orderEntry type="library" name="temp" level="project" />
+    <orderEntry type="library" name="benchee_markdown" level="project" />
+    <orderEntry type="library" name="ex_sqlean" level="project" />
+    <orderEntry type="library" name="elixir_make" level="project" />
+    <orderEntry type="library" name="cc_precompiler" level="project" />
+    <orderEntry type="library" name="certifi" level="project" />
   </component>
 </module>
