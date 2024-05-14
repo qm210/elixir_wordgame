@@ -1,12 +1,33 @@
 <style>
-.word-display {
-    margin: 5rem;
-    font-size: 6rem;
-    font-weight: bold;
-    text-align: center;
-}
+    .word-display {
+        margin: 2rem;
+        font-size: 6rem;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .input-form {
+        margin: auto;
+        padding: 1rem;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    input {
+        border: 1px solid black;
+        padding: 1rem;
+    }
 </style>
+
+<div style="text-align: right;">
+    Your ID: <%= @clientId %>
+</div>
 
 <div class="word-display" style={"color: #{@color};"}>
     <%= @word %>
 </div>
+<form class="input-form" phx-submit="send_user_input">
+    <div>Type the COLOR, not the word!</div>
+    <div>Press enter then.</div>
+    <input autofocus name="user_input" placeholder="..."/>
+</form>

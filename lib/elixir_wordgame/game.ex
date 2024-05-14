@@ -1,13 +1,16 @@
 defmodule ElixirWordgame.Game do
   use GenServer
 
-  def start_link(initial_state \\ 0) do
-    GenServer.start_link(__MODULE__, initial_state, name: __MODULE__)
+  @registry_key :wordgame_client_registry
+
+  def start_link(_) do
+    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
   def init(_state) do
     # called on application startup
-    # value = GenServer.call(self(), :draw_random)
+    Registry.start_link(name: @registry_key, keys: :unique)
+
     initial_state = draw_random()
     {:ok, initial_state}
   end

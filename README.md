@@ -91,15 +91,43 @@ defp draw_different_word(first_word, words) do
 ```
 * init/1 is called once per app startup only. can't GenServer.call(self(), ... ) due to recursive calls! 
 
-## Simple Clock
-> From commit 49a8347
+## User Input
+> From commit 216e94a
+* Use a simple form that submits on Enter, we would need JS for more custom event handling
+* needs the `phx-submit` attribute, e.g. might look like
+```
+<form phx-submit="send_user_input">
+    <input autofocus name="user_input"/>
+</form>
+```
+* can run even when not defined in the backend, will crash the frontend (see stacktrace in backend) but not the app (auto reload liveview) 
+* but define this in the LiveView and so Enter won't crash the page anymore
+```
+  def handle_event("send_user_input", %{"user_input" => guess}, socket) do
+    IO.inspect(guess, label: "User Guesses:")
+    {:noreply, socket}
+  end
+  ```
 
 
-
+# Reset the Form from the LiveView: Hooks.
+* Hooks (custom JS interactions)
+```
+document.addEventListener("DOMContentLoaded", () => {
+  let Hooks = {}
+  Hooks.ForceInputValue = {
+    mounted() {
+      this.el.addEventListener("phx-force-input-value", (event) => {
+        this.el.value = event.detail.value;
+      });
+    },
+  };
+```
 
 ### Postponed
 * Ecto Integration (Database and Schemas) 
-
+* Live Components and functional components
+* Identifying a certain client? (I guess it would need to store a ID in its sessionStorage)
 
 ## General stuff
 Language
@@ -111,8 +139,14 @@ Language
 * destructuring / everything is pattern-matching rather than assignment
   * focus on Immutability
   * i.e. there are no while-loops
+* wants various "overwrites" to be grouped together
+
+Framework
+- usually return tuples {:noreply, socket}, {:ok, ...} or errors
+- also used e.g. in file reading etc. -> pattern matching
 
 Infra / Workflow
 * no "npm install", rather "mix hex.info <package_name>" -> add manually -> "mix deps.get"
 * Live Reloading on by default, but might look into configuration in case of wonders
 * mix format
+* stacktraces get transported to the frontend, if the server can't just be restarted 
