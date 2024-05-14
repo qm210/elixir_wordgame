@@ -9,7 +9,6 @@ defmodule ElixirWordgameWeb.GameLive do
     end
 
     state = GenServer.call(ElixirWordgame.Game, :get)
-    IO.inspect(socket, label: "Socket")
     {:ok, socket
           |> assign(word: state[:word])
           |> assign(color: state[:color])

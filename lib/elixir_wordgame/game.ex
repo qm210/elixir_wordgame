@@ -27,12 +27,18 @@ defmodule ElixirWordgame.Game do
   def handle_call({:check_guess, guess}, _from, state) do
     if guess == state[:color] do
       new_state = draw_random()
-      message = {:fresh_drawn, new_state}
-      Phoenix.PubSub.broadcast(ElixirWordgame.PubSub, "game_server", message)
+      # yeah we don't have to wait, i just wanted to try.
+      Process.send_after(self(), :publish_update, 0)
       {:reply, :success, new_state}
     else
       {:reply, :failure, state}
     end
+  end
+
+  def handle_info(:publish_update, state) do
+    message = {:fresh_drawn, state}q
+    Phoenix.PubSub.broadcast(ElixirWordgame.PubSub, "game_server", message)
+    {:noreply, state}
   end
 
   @colors [

@@ -111,7 +111,7 @@ defp draw_different_word(first_word, words) do
   ```
 
 ## Broadcasting Updates
-
+> see Commit 07b63d1
 
 
 # Reset the Form from the LiveView: Hooks.
@@ -127,6 +127,11 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 ```
+
+## Unclear: Update Behaviour
+* entering the correct name resets the field
+* entering a wrong name doesn't reset the field (unless I also change the socket assigns in the :failure case)
+* it also doesn't reset the fields of the other clients 
 
 ### Postponed
 * Ecto Integration (Database and Schemas) 
