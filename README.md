@@ -45,6 +45,8 @@ There is a CLI generator syntax `mix phx.gen.live ...` but we want to know what 
     * --> see basic version with only render and mount
     * `@time` is a socket assign and needs to be defined by the mount()
 
+
+
 ## Simple Clock
 
 
