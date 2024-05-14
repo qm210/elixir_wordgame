@@ -17,6 +17,11 @@
         border: 1px solid black;
         padding: 1rem;
     }
+
+    .score {
+        text-align: center;
+        margin: 1rem;
+    }
 </style>
 
 <div style="text-align: right;">
@@ -31,3 +36,6 @@
     <div>Press enter then.</div>
     <input autofocus name="user_input" placeholder="..."/>
 </form>
+<div class="score">
+    <%= @points %> points so far...
+</div>

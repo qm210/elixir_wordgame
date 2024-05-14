@@ -90,6 +90,7 @@ defp draw_different_word(first_word, words) do
   end
 ```
 * init/1 is called once per app startup only. can't GenServer.call(self(), ... ) due to recursive calls! 
+* the three return values are e.g. {:reply, return_value, new_state} or {:error, ...}
 
 ## User Input
 > From commit 216e94a
@@ -109,6 +110,9 @@ defp draw_different_word(first_word, words) do
   end
   ```
 
+## Broadcasting Updates
+
+
 
 # Reset the Form from the LiveView: Hooks.
 * Hooks (custom JS interactions)
@@ -127,6 +131,8 @@ document.addEventListener("DOMContentLoaded", () => {
 ### Postponed
 * Ecto Integration (Database and Schemas) 
 * Live Components and functional components
+* exact differences PubSub / GenServer / LiveView
+  * LiveView _is_ a GenServer 
 * Identifying a certain client? (I guess it would need to store a ID in its sessionStorage)
 
 ## General stuff
@@ -140,6 +146,9 @@ Language
   * focus on Immutability
   * i.e. there are no while-loops
 * wants various "overwrites" to be grouped together
+* ^ Pin Operator (match the pattern without evaluate again. ...eh??)
+> The ^Phoenix.PubSub part uses the pin operator to ensure that the atom :pubsub is matched exactly as it is, without being evaluated. This is important because atoms in Elixir are unique identifiers, and changing the evaluation order could lead to different atoms being matched, which would cause the pattern match to fail.
+> In this specific case, the pin operator is used to ensure that the Phoenix.PubSub atom is matched exactly as it appears in the pattern, preventing any potential issues with atom evaluation order. This is a common practice when dealing with atoms in patterns, especially in larger applications or libraries where the risk of unintentionally matching a different atom is higher.
 
 Framework
 - usually return tuples {:noreply, socket}, {:ok, ...} or errors
@@ -150,3 +159,4 @@ Infra / Workflow
 * Live Reloading on by default, but might look into configuration in case of wonders
 * mix format
 * stacktraces get transported to the frontend, if the server can't just be restarted 
+ 
