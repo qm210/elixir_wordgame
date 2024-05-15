@@ -2,7 +2,9 @@ defmodule ElixirWordgameWeb.ErrorJSONTest do
   use ElixirWordgameWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert ElixirWordgameWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert ElixirWordgameWeb.ErrorJSON.render("404.json", %{}) == %{
+             errors: %{detail: "Not Found"}
+           }
   end
 
   test "renders 500" do

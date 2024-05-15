@@ -16,8 +16,6 @@ defmodule ElixirWordgame.Game do
 
   def init(_state) do
     # called on application startup
-    Registry.start_link(name: :wordgame_client_registry, keys: :unique)
-
     initial_state = draw_random()
     {:ok, initial_state}
   end
@@ -46,6 +44,8 @@ defmodule ElixirWordgame.Game do
     end
   end
 
+  # btw. difference: "call" blocks, "cast" doesn't but doesn't guarantee result.
+
   def handle_info(:publish_update, state) do
     message = {:fresh_drawn, state}
     Phoenix.PubSub.broadcast(ElixirWordgame.PubSub, "game_server", message)
@@ -62,5 +62,4 @@ defmodule ElixirWordgame.Game do
     result = Enum.random(words)
     if result != first_word, do: result, else: draw_different_word(first_word, words)
   end
-
 end

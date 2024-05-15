@@ -18,7 +18,6 @@ defmodule ElixirWordgame.Application do
       # {ElixirWordgame.Worker, arg},
       # Start to serve requests, typically the last entry
       ElixirWordgameWeb.Endpoint,
-
       ElixirWordgame.Game
     ]
 

@@ -1,79 +1,95 @@
 <style>
-    .word-display {
-        margin: 2rem;
-        font-size: 6rem;
-        font-weight: bold;
-        text-align: center;
-    }
+  .word-display {
+      margin: 2rem;
+      font-size: 6rem;
+      font-weight: bold;
+      text-align: center;
+  }
 
-    .input-form {
+  .input-form {
+      margin: auto;
+      padding: 1rem;
+      font-size: 2rem;
+      text-align: center;
+  }
+
+  input {
+      border: 1px solid black;
+      padding: 1rem;
+  }
+
+  .score {
+      text-align: center;
+      margin: 1rem;
+  }
+
+  .colors-list {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 2rem;
+  }
+  .colors-list > div {
+      border: 1px solid grey;
+      padding: 0.5rem;
+      min-width: 10vw;
+      text-align: center;
+  }
+
+  .loading-title {
         margin: auto;
-        padding: 1rem;
-        font-size: 2rem;
+        padding: 3rem;
+        font-size: 4rem;
         text-align: center;
-    }
-
-    input {
-        border: 1px solid black;
-        padding: 1rem;
-    }
-
-    .score {
-        text-align: center;
-        margin: 1rem;
-    }
-
-    .colors-list {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        padding: 2rem;
-    }
-    .colors-list > div {
-        border: 1px solid grey;
-        padding: 0.5rem;
-        min-width: 10vw;
-        text-align: center;
-    }
+  }
 </style>
 
-<div style="text-align: right;">
-    Your ID: <%= @clientId %>
-</div>
+<.live_component
+  module={ElixirWordgame.InitializationGuard}
+  id="whole-game"
+  initialized={@initialized}
+>
+  <div style="text-align: right;">
+    <%= if @initialized, do: "Your ID: " <> @clientId, else: "initializing..." %>
+  </div>
 
-<div class="word-display" style={"color: #{@color};"}>
+  <div class="word-display" style={"color: #{@color};"}>
     <%= @word %>
-</div>
-<form class="input-form" phx-submit="send_user_input">
-    <div>Type the COLOR, not the word!</div>
-    <div>Press enter then.</div>
-    <input
-        autofocus
-        name="user_input"
-        placeholder="..."
-        phx-hook="ResetInputOnUpdate"
-        id="user_input"
-    />
-</form>
-<div class="score">
-    <%= @points %> points so far...
-</div>
+  </div>
 
-<script>
+  <form class="input-form" phx-submit="send_user_input">
+    <div>Type the COLOR, not the word!</div>
+
+    <div>Press enter then.</div>
+
+    <input
+      autofocus
+      name="user_input"
+      placeholder="..."
+      phx-hook="ResetInputOnUpdate"
+      id="user_input"
+    />
+  </form>
+
+  <div class="score">
+    <%= @points %> points so far...
+  </div>
+
+  <script>
     function applyColor(element, color) {
         element.style.backgroundColor = color;
         element.style.transition = color ? 0 : "500ms";
     }
-</script>
+  </script>
 
-<div class="colors-list">
+  <div class="colors-list">
     <%= for color <- @definedColors do %>
-        <div
-            onmouseover={"applyColor(this, '#{color}')"}
-            onmouseout="applyColor(this, '')"
-            >
-            <%= color %>
-        </div>
+      <div onmouseover={"applyColor(this, '#{color}')"} onmouseout="applyColor(this, '')">
+        <%= color %>
+      </div>
     <% end %>
-</div>
+  </div>
+</.live_component>
+
+<div id="session-storer" phx-hook="SessionStorage"></div>

@@ -158,11 +158,78 @@ ResetInputOnUpdate: {
 ### Excursion: Show all colors with some interactivity
 * We love interactive frontends, so we want to have a list of all available colors,
   but in ordner not to distract, they should only show their color on mouse hover.
-* 
+* demonstrate for loop in the HEEX
+> See Commit 6fe673c 
+
+### Session Storage: keep ID after reload
+* simple hook that does not think much on its own
+* "session_load" that pushEvent() something back
+* another form of pattern matching e.g.
+  ```
+    def handle_event("hydrate", nil, socket) do
+      IO.inspect(socket, label: "in the nil branch")
+      {:noreply, socket}
+    end
+  
+    def handle_event("hydrate", stored_session, socket) do
+      IO.inspect(stored_session, label: "stored_session")
+      {:noreply, socket}
+    end
+  ```
+
+  goes in the order from top to bottom until first match  
+
+  ```
+  def handle_event("hydrate", token_data, socket) when is_binary(token_data) do
+  IO.inspect(token_data, label: "token_data binary")
+  {:noreply, socket}
+  end
+
+  def handle_event("hydrate", token_data, socket) do
+  {:noreply, socket}
+  end
+  ```
+  * Event flow
+    * BE > FE: "just give me everything you have"
+    * FE > BE: "there you go"
+    * BE decides
+      * is this nil? -> new session, keep the initial ID
+      * matches %{"id" => ...} ? -> take this ID instead
+      * something else? is an error, do not assign(initialized: true)
+
+* btw: tried it, but the "session-storer" would not work in the root template
+  * which is defined in `lib/elixir_wordgame_web/components/layouts/root.html.heex`
+  * but then "hook: unable to push hook event. LiveView not connected -  ..."
+    * --> needs to be in the 
+
+### Initialized-State in the Template
+* can replace
+```
+<%= if @initialized, do: 'Your ID: ' <> @clientId, else: 'initializing...' %>
+```
+* but better would be to have a huge loading screen before everything.
+* Let's define a guarding LiveComponent
+
+-> ElixirWordgame.InitializationGuard use Phoenix.LiveComponent and
+```
+<.live_component module={InitializationGuard} id="..." initialized={@initialized}>
+  ...
+</.live_component>
+```
+who then, if initialized, can render
+```
+~H"""
+  <div style="display: contents">
+    <%= render_slot(@inner_block) %>
+  </div>
+"""
+```
+
+### Upcoming Next: Storing Points in the GenServer...
 
 ### Postponed
-* Ecto Integration (Database and Schemas) 
-* Live Components and functional components
+* Ecto Integration (Database and Schemas)
+* Functional components (simpler than live components, also possible)
 * exact differences PubSub / GenServer / LiveView
   * LiveView _is_ a GenServer 
 * Identifying a certain client? (I guess it would need to store a ID in its sessionStorage)
@@ -174,11 +241,15 @@ Language
 * function/1 notation -> i.e. like Python, Elixir is dynamically but strongly typed (no automatic type coercion, but a variable doesn't have an innate type)
   * "def" (public) and "defp" (private); but no nested functions
 * last line is return value
+* "if" also has "unless" (and there is "cond" which is like multi-if)
 * destructuring / everything is pattern-matching rather than assignment
   * focus on Immutability
   * i.e. there are no while-loops
 * wants various "overwrites" to be grouped together
-* ^ Pin Operator (match the pattern without evaluate again. ...eh??)
+* = is not assignment, it is pattern matching
+    * a = 1 matches -> a will be 1 
+  * ^ Pin Operator (match the pattern without evaluate again. ...eh??)
+    * ^a = 2 can only match if the pinned (previous) value of a is also 2
 > The ^Phoenix.PubSub part uses the pin operator to ensure that the atom :pubsub is matched exactly as it is, without being evaluated. This is important because atoms in Elixir are unique identifiers, and changing the evaluation order could lead to different atoms being matched, which would cause the pattern match to fail.
 > In this specific case, the pin operator is used to ensure that the Phoenix.PubSub atom is matched exactly as it appears in the pattern, preventing any potential issues with atom evaluation order. This is a common practice when dealing with atoms in patterns, especially in larger applications or libraries where the risk of unintentionally matching a different atom is higher.
 
