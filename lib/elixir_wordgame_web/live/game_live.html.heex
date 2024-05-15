@@ -34,7 +34,13 @@
 <form class="input-form" phx-submit="send_user_input">
     <div>Type the COLOR, not the word!</div>
     <div>Press enter then.</div>
-    <input autofocus name="user_input" placeholder="..."/>
+    <input
+        autofocus
+        name="user_input"
+        placeholder="..."
+        phx-hook="ResetInputOnUpdate"
+        id="user_input"
+    />
 </form>
 <div class="score">
     <%= @points %> points so far...

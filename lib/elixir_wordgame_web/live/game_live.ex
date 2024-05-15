@@ -33,6 +33,7 @@ defmodule ElixirWordgameWeb.GameLive do
     {:noreply, socket
                |> assign(word: new_values[:word])
                |> assign(color: new_values[:color])
+               |> push_event("reset_input_field", %{})
     }
   end
 

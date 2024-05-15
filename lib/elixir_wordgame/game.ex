@@ -14,12 +14,10 @@ defmodule ElixirWordgame.Game do
   end
 
   def handle_call(:get, _from, state) do
-    IO.inspect state, label: "Get - state"
     {:reply, state, state}
   end
 
   def handle_call(:draw_random, _from, state) do
-    IO.inspect state, label: "Draw_Random State"
     new_state = draw_random()
     {:reply, new_state, new_state}
   end
@@ -36,7 +34,7 @@ defmodule ElixirWordgame.Game do
   end
 
   def handle_info(:publish_update, state) do
-    message = {:fresh_drawn, state}q
+    message = {:fresh_drawn, state}
     Phoenix.PubSub.broadcast(ElixirWordgame.PubSub, "game_server", message)
     {:noreply, state}
   end

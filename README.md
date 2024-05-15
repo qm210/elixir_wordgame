@@ -131,7 +131,28 @@ document.addEventListener("DOMContentLoaded", () => {
 ## Unclear: Update Behaviour
 * entering the correct name resets the field
 * entering a wrong name doesn't reset the field (unless I also change the socket assigns in the :failure case)
-* it also doesn't reset the fields of the other clients 
+* is that general behaviour? 
+* Seems like the Input Field can't be reset by the socket assign while it has focus.
+
+### Resetting the Input Value from a broadcast: Hooks 
+* See above, cannot do something like `value={"#{@currentInput}"}` to reset (will fail while focus)
+
+  * So: push an event by the live view, as
+```
+socket |> ... |> push_event("reset_input_field", %{})
+```
+  * And define a custom hook for lower-level-JS/HTML-Interoperability:
+```<input ... phx-hook="ResetInputOnUpdate" id="<any id>"```
+  * define hook as seen in `api.js` and `hooks.js`
+```
+ResetInputOnUpdate: {
+    mounted() {
+        this.handleEvent("reset_input_field", message => {
+            this.el.value = "";
+        });
+    },
+}
+```
 
 ### Postponed
 * Ecto Integration (Database and Schemas) 
