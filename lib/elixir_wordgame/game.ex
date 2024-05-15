@@ -1,6 +1,15 @@
 defmodule ElixirWordgame.Game do
   use GenServer
 
+  @colors [
+    "blue",
+    "orange",
+    "green",
+    "red",
+    "cyan",
+    "magenta"
+  ]
+
   def start_link(_) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
@@ -17,7 +26,11 @@ defmodule ElixirWordgame.Game do
     {:reply, state, state}
   end
 
-  def handle_call(:draw_random, _from, state) do
+  def handle_call(:get_colors, _from, state) do
+    {:reply, @colors, state}
+  end
+
+  def handle_call(:draw_random, _from, _state) do
     new_state = draw_random()
     {:reply, new_state, new_state}
   end
@@ -38,15 +51,6 @@ defmodule ElixirWordgame.Game do
     Phoenix.PubSub.broadcast(ElixirWordgame.PubSub, "game_server", message)
     {:noreply, state}
   end
-
-  @colors [
-    "blue",
-    "orange",
-    "green",
-    "red",
-    "cyan",
-    "magenta"
-  ]
 
   def draw_random() do
     word = Enum.random(@colors)

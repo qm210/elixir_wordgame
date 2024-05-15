@@ -155,6 +155,11 @@ ResetInputOnUpdate: {
 ```
 > cf. commit d2dd850
 
+### Excursion: Show all colors with some interactivity
+* We love interactive frontends, so we want to have a list of all available colors,
+  but in ordner not to distract, they should only show their color on mouse hover.
+* 
+
 ### Postponed
 * Ecto Integration (Database and Schemas) 
 * Live Components and functional components

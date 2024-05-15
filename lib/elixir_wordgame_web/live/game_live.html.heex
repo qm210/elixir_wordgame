@@ -22,6 +22,20 @@
         text-align: center;
         margin: 1rem;
     }
+
+    .colors-list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 2rem;
+    }
+    .colors-list > div {
+        border: 1px solid grey;
+        padding: 0.5rem;
+        min-width: 10vw;
+        text-align: center;
+    }
 </style>
 
 <div style="text-align: right;">
@@ -44,4 +58,21 @@
 </form>
 <div class="score">
     <%= @points %> points so far...
+</div>
+
+<script>
+    function applyColor(element, color) {
+        element.style.backgroundColor = color;
+    }
+</script>
+
+<div class="colors-list">
+    <%= for color <- @definedColors do %>
+        <div
+            onmouseover={"applyColor(this, '#{color}')"}
+            onmouseout="applyColor(this, '')"
+            >
+            <%= color %>
+        </div>
+    <% end %>
 </div>

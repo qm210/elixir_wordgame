@@ -8,12 +8,14 @@ defmodule ElixirWordgameWeb.GameLive do
       Phoenix.PubSub.subscribe(ElixirWordgame.PubSub, "game_server")
     end
 
+    defined_colors = GenServer.call(ElixirWordgame.Game, :get_colors)
     state = GenServer.call(ElixirWordgame.Game, :get)
     {:ok, socket
           |> assign(word: state[:word])
           |> assign(color: state[:color])
           |> assign(clientId: client_id)
           |> assign(points: 0)
+          |> assign(definedColors: defined_colors)
     }
   end
 
